@@ -125,7 +125,6 @@
                                 <th>Item Serial</th>
                                 <th>Item Barcode</th>
                                 <th>Qty</th>
-                                <th>Rate</th>
                                 <th>Amount</th>
                             </tr>
                         </thead>
@@ -137,36 +136,31 @@
                             $amount = isset($amounts[$index]) ? $amounts[$index] : ($product->price * $quantity); 
                             $price = isset($prices[$index]) ? $prices[$index] : $product->price;
                             $retailRate = isset($retailRates[$index]) ? $retailRates[$index] : $product->retail_rate;
-                            $wholesaleRate = isset($wholesaleRates[$index]) ? $wholesaleRates[$index] : $product->wholesale_rate;
-                            $miniWholesaleRate = isset($miniWholesaleRates[$index]) ? $miniWholesaleRates[$index] : $product->mini_whole_rate;
-                            $typeARate = isset($typeARates[$index]) ? $typeARates[$index] : $product->type_a_rate;
-                            $typeBRate = isset($typeBRates[$index]) ? $typeBRates[$index] : $product->type_b_rate;
-                            $typeCRate = isset($typeCRates[$index]) ? $typeCRates[$index] : $product->type_c_rate;
-                        @endphp
+                          @endphp
+                          
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $product->brand_name ?? 'N/A' }}</td>
-                            <td>{{ $product->product_name ?? 'Unknown Product' }}</td>
+                            <td>{{ $product->item_name ?? 'Unknown Product' }}</td>
                             <td>{{$product->id}}</td>
                             <td>{{ $product->barcode ?? 'N/A' }}</td>
-                            <td>{{ $quantity }}</td>
-                            <td>{{ $price }}</td>
-                            <td>{{ $amount }}</td>
+                            <td>{{ $product->quantity }}</td>
+                            <td>{{ $product->retail_rate }}</td>
                         </tr>
                         @endforeach
 
                             <tr>
-                                <td colspan="6"></td>
+                                <td colspan="5"></td>
                                 <td class="table-info"><strong>Gross Amount</strong></td>
                                 <td class="table-info"><strong>{{$purchase->gross_amount}}</strong></td>
                             </tr>
                             <tr>
-                                <td colspan="6"></td>
+                                <td colspan="5"></td>
                                 <td class="table-danger"><strong>Discount</strong></td>
                                 <td class="table-danger"><strong>{{$purchase->discount}}</strong></td>
                             </tr>
                             <tr>
-                                <td colspan="6"></td>
+                                <td colspan="5"></td>
                                 <td class="table-success"><strong>Net Amount</strong></td>
                                 <td class="table-success"><strong>{{$purchase->net_amount}}</strong></td>
                             </tr>

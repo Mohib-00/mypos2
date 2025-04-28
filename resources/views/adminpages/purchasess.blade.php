@@ -161,7 +161,7 @@
                                   </select>
                               </td>
                               <td style="min-width: 120px; max-width: 120px;">
-                                <input type="number" name="quantity[]" class="form-control" oninput="updateSingleRates(this); calculateTotals();">
+                                <input type="number"  name="quantity[]" class="form-control" oninput="updateSingleRates(this); calculateTotals();">
                               </td>
                               <td style="min-width: 120px; max-width: 120px;">
                                   <input type="number" name="purchase_rate[]" class="form-control" oninput="calculateTotals(); updateSingleRates(this)">
@@ -237,17 +237,13 @@
        $('#submitdata').click(function(e) {
            e.preventDefault();
    
-           // Collect form data
            var formData = new FormData($('#productssssform')[0]);
    
-           // Get the date value and append the time (e.g., 00:00:00 for now)
            var invoiceDate = $('#from_date').val();
            if (invoiceDate) {
-               // If the backend expects a DATETIME, add the time part
-               invoiceDate += " 00:00:00";  // Append default time (00:00:00)
+               invoiceDate += " 00:00:00"; 
            }
    
-           // Append fields to FormData
            formData.append('created_at', invoiceDate);
            formData.append('totalquantity', $('#totalQuantity').val());
            formData.append('gross_amount', $('#grossAmount').val());
@@ -255,23 +251,23 @@
            formData.append('net_amount', $('#netAmount').val());
    
            $.ajax({
-               url: '{{ route("purchase.store") }}',  // Make sure the route is correct
+               url: '{{ route("purchase.store") }}',  
                type: 'POST',
                data: formData,
-               processData: false,  // Important to prevent jQuery from processing the form data
-               contentType: false,  // Important to handle multipart/form-data
+               processData: false,  
+               contentType: false,  
                success: function(response) {
-                   // SweetAlert on success
                    Swal.fire({
                        title: 'Success!',
                        text: 'Purchase saved successfully!',
                        icon: 'success',
                        confirmButtonText: 'OK'
-                   });
-                   $('#productssssform')[0].reset();  // Optional: Reset form
+                      }).then(() => {
+                          loadpurchasePage(); 
+                      });
+                   $('#productssssform')[0].reset();  
                },
                error: function(xhr, status, error) {
-                   // SweetAlert on error
                    Swal.fire({
                        title: 'Error!',
                        text: 'Something went wrong: ' + error,
@@ -353,7 +349,7 @@
                   </select>
               </td>
               <td style="min-width: 120px; max-width: 120px;">
-<input type="number" name="quantity[]" class="form-control" oninput="updateSingleRates(this); calculateTotals();">
+<input type="number" name="quantity[]" min="1" class="form-control" oninput="updateSingleRates(this); calculateTotals();">
               </td>
               <td style="min-width: 120px; max-width: 120px;">
                   <input type="number" name="purchase_rate[]" class="form-control" oninput="calculateTotals(); updateSingleRates(this)">
