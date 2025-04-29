@@ -110,79 +110,75 @@
 
                       <div class="card-body">
                         <div class="table-responsive">
-                          <table
-                            id="add-row"
-                            class="display table table-striped table-hover"
-                          >
-                            <thead>
-                              <tr>
-                                <th>#</th>
-                                <th>Id</th>
-                                <th>Item Name</th>
-                                <th>BarCode</th>
-                                <th>Opening Qty</th>
-                                <th>Qty</th>
-                                <th>Purchase</th>
-                                <th>Retail</th>
-                                <th>Unit Purchase</th>
-                                <th>Unit Retail</th>
-                              </tr>
-                            </thead>
-                           
-                            <tbody>
-                                @php $counter = 1; @endphp
-                                @foreach($products as $product)
+                            <div class="mb-3">
+                                <input type="text" id="searchByName" class="form-control" placeholder="Search by Item Name...">
+                            </div>
+                            
+                            <!-- Product Table -->
+                            <table id="productTable" class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Id</th>
+                                        <th>Item Name</th>
+                                        <th>BarCode</th>
+                                        <th>Opening Qty</th>
+                                        <th>Qty</th>
+                                        <th>Purchase</th>
+                                        <th>Retail</th>
+                                        <th>Unit Purchase</th>
+                                        <th>Unit Retail</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php $counter = 1; @endphp
+                                    @foreach($products as $product)
                                         <tr class="user-row" id="product-{{ $product->id }}">
-                                                <td>{{$counter}}</td>
-                                                <td>{{$product->id}}
-                                               
-                                                    <td>
-                                                        <input type="text" class="form-control inline-edit" style="width: 120px;" 
-                                                            data-id="{{ $product->id }}" 
-                                                            data-column="item_name" 
-                                                            value="{{ $product->item_name }}" 
-                                                            data-original-value="{{ $product->item_name }}">
-                                                    </td>
-                                                    
-                                                    <td>
-                                                        <input type="text" class="form-control inline-edit" style="width: 120px;" 
-                                                            data-id="{{ $product->id }}" 
-                                                            data-column="barcode" 
-                                                            value="{{ $product->barcode }}" 
-                                                            data-original-value="{{ $product->barcode }}">
-                                                    </td>
-                                                    
-                                                <td id="gram{{ $product->id }}">
-                                                    <div class="input-group" style="width: 100px;">
-                                                        <input type="number" id="opening_qty_{{ $product->id }}" class="form-control" value="{{ $product->opening_quantity }}" style="border-right: 0;">
-                                                        <button class="btn btn-sm btn-primary updateOpeningQty" data-product-id="{{ $product->id }}" style="border-left: 0;">
-                                                            <i class="fa fa-check"></i> 
-                                                        </button>
-                                                    </div>
-                                                    
-                                                </td>                                                                                               
-                                                 
-                                                <td>
-                                                    <input type="text" class="form-control inline-edit" style="width: 80px;" data-id="{{ $product->id }}" data-column="quantity" value="{{ $product->quantity }}">
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control inline-edit" style="width: 80px;" data-id="{{ $product->id }}" data-column="purchase_rate" value="{{ $product->purchase_rate }}">
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control inline-edit" style="width: 80px;" data-id="{{ $product->id }}" data-column="retail_rate" value="{{ $product->retail_rate }}">
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control inline-edit" style="width: 80px;" data-id="{{ $product->id }}" data-column="single_purchase_rate" value="{{ $product->single_purchase_rate }}" disabled>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control inline-edit" style="width: 80px;" data-id="{{ $product->id }}" data-column="single_retail_rate" value="{{ $product->single_retail_rate }}" disabled>
-                                                </td>
-                                                
-                                            </tr>
-                                            @php $counter++; @endphp
-                                @endforeach
-                            </tbody>
-                          </table>
+                                            <td>{{ $counter }}</td>
+                                            <td>{{ $product->id }}</td>
+                                            <td>
+                                                <input type="text" class="form-control inline-edit item-name-input" style="width: 120px;" 
+                                                    data-id="{{ $product->id }}" 
+                                                    data-column="item_name" 
+                                                    value="{{ $product->item_name }}" 
+                                                    data-original-value="{{ $product->item_name }}">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control inline-edit" style="width: 120px;" 
+                                                    data-id="{{ $product->id }}" 
+                                                    data-column="barcode" 
+                                                    value="{{ $product->barcode }}" 
+                                                    data-original-value="{{ $product->barcode }}">
+                                            </td>
+                                            <td id="gram{{ $product->id }}">
+                                                <div class="input-group" style="width: 100px;">
+                                                    <input type="number" id="opening_qty_{{ $product->id }}" class="form-control" value="{{ $product->opening_quantity }}" style="border-right: 0;">
+                                                    <button class="btn btn-sm btn-primary updateOpeningQty" data-product-id="{{ $product->id }}" style="border-left: 0;">
+                                                        <i class="fa fa-check"></i> 
+                                                    </button>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control inline-edit" style="width: 80px;" data-id="{{ $product->id }}" data-column="quantity" value="{{ $product->quantity }}">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control inline-edit" style="width: 80px;" data-id="{{ $product->id }}" data-column="purchase_rate" value="{{ $product->purchase_rate }}">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control inline-edit" style="width: 80px;" data-id="{{ $product->id }}" data-column="retail_rate" value="{{ $product->retail_rate }}">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control inline-edit" style="width: 80px;" data-id="{{ $product->id }}" data-column="single_purchase_rate" value="{{ $product->single_purchase_rate }}" disabled>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control inline-edit" style="width: 80px;" data-id="{{ $product->id }}" data-column="single_retail_rate" value="{{ $product->single_retail_rate }}" disabled>
+                                            </td>
+                                        </tr>
+                                        @php $counter++; @endphp
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            
                         </div>
                       </div>
                     </div>
@@ -196,7 +192,18 @@
     </div>
 
 
-
+    <script>
+        document.getElementById("searchByName").addEventListener("keyup", function () {
+            let query = this.value.toLowerCase();
+            let rows = document.querySelectorAll("#productTable tbody tr");
+    
+            rows.forEach(function (row) {
+                let itemNameInput = row.querySelector(".item-name-input");
+                let itemNameValue = itemNameInput ? itemNameInput.value.toLowerCase() : "";
+                row.style.display = itemNameValue.includes(query) ? "" : "none";
+            });
+        });
+    </script>
 
    
     
