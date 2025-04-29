@@ -74,9 +74,11 @@
                             <button class="btn btn-sm btn-outline-primary me-2 print-table">
                                 <i class="fas fa-print"></i> Print
                             </button>
-                    
                             <button class="btn btn-sm btn-outline-danger export-pdf">
                                 <i class="fas fa-file-pdf"></i> PDF
+                            </button>
+                            <button class="btn btn-sm btn-outline-primary export-excel">
+                                <i class="fas fa-file-pdf"></i> Excel
                             </button>
                         </div>
                     

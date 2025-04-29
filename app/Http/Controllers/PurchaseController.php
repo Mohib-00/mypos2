@@ -96,17 +96,7 @@ class PurchaseController extends Controller
     
             $purchase->save();
     
-            foreach ($request->products as $index => $product_id) {
-                $product = Product::find($product_id);
-                if ($product) {
-                    $product->quantity = $request->quantity[$index]; 
-                    $product->purchase_rate = $request->purchase_rate[$index];
-                    $product->retail_rate = $request->retail_rate[$index];
-                    $product->single_retail_rate = $request->single_retail_rate[$index];
-                    $product->single_purchase_rate = $request->single_purchase_rate[$index];
-                    $product->save();
-                }
-            }
+          
     
             return response()->json(['success' => 'Purchase saved and products updated!']);
     
@@ -143,18 +133,7 @@ class PurchaseController extends Controller
     
             $purchase->save();
     
-            foreach ($request->products as $index => $product_id) {
-                $product = Product::find($product_id);
-                if ($product) {
-                    $product->quantity = $request->quantity[$index]; 
-                    $product->purchase_rate = $request->purchase_rate[$index];
-                    $product->retail_rate = $request->retail_rate[$index];
-                    $product->single_retail_rate = $request->single_retail_rate[$index];
-                    $product->single_purchase_rate = $request->single_purchase_rate[$index];
-                    $product->save();
-                }
-            }
-    
+            
             return response()->json(['success' => 'Purchase Edit and products updated!']);
     
         } catch (\Exception $e) {

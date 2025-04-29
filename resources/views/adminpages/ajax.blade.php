@@ -40,6 +40,26 @@
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll(".export-excel").forEach(button => {
+          button.addEventListener("click", function () {
+              const table = document.querySelector(".table"); 
+              if (!table) {
+                  alert("No table found!");
+                  return;
+              }
+  
+              const workbook = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
+              XLSX.writeFile(workbook, "table_export.xlsx");
+          });
+      });
+  });
+  </script>
+  
    
 <script>
     $(document).on('click', '.open-opening-modal', function () {
