@@ -289,9 +289,11 @@
     const form = document.getElementById("purchasegrnform");
     const formData = new FormData(form);
 
-    // Add purchase_id explicitly
     const purchaseId = document.getElementById("vendorsSelect").value;
     formData.append("purchase_id", purchaseId);
+
+    const netAmount = document.getElementById("netAmount").value || 0;
+    formData.append("net_amount", netAmount);
 
     const rows = document.querySelectorAll("#productTable tbody tr");
 
@@ -320,13 +322,28 @@
     })
     .then(response => response.json())
     .then(data => {
-        alert(data.message);
-    })
+    Swal.fire({
+        title: 'Success!',
+        text: data.message,
+        icon: 'success',
+        confirmButtonText: 'OK'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            loadpurchasePage(); 
+        }
+    });
+})
     .catch(error => {
         console.error("Error:", error);
-        alert("Something went wrong.");
+        Swal.fire({
+            title: 'Error!',
+            text: 'Something went wrong. Please try again.',
+            icon: 'error',
+            confirmButtonText: 'Close'
+        });
     });
 });
+
       </script>
       
    

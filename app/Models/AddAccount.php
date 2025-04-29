@@ -19,4 +19,10 @@ class AddAccount extends Model
         'child',
         'opening',
     ];
+
+    public function grnAccounts()
+{
+    return $this->hasMany(GrnAccount::class, 'vendor_account_id');
+}
+
 }

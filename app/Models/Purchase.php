@@ -35,6 +35,12 @@ class Purchase extends Model
     }
     public function products()
 {
-    return $this->belongsToMany(Product::class); // Assuming a many-to-many relationship
+    return $this->belongsToMany(Product::class); 
 }
+
+public function vendorAccount()
+{
+    return $this->belongsTo(AddAccount::class, 'vendors', 'sub_head_name');
+}
+
 }
