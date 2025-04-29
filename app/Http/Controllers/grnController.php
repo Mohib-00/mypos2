@@ -40,23 +40,54 @@ class grnController extends Controller
             'receiving_location' => $purchase->receiving_location,
             'created_at' => $purchase->created_at,
             'remarks' => $purchase->remarks,
-            'total_quantity' => $purchase->total_quantity,
+            'totalquantity' => $purchase->totalquantity,
             'gross_amount' => $purchase->gross_amount,
             'discount' => $purchase->discount,
             'net_amount' => $purchase->net_amount,
             'products' => $purchase->products,
             'quantity' => $purchase->quantity,
-            'price' => $purchase->price,
             'retail_rate' => $purchase->retail_rate,
-            'wholesale_rate' => $purchase->wholesale_rate,
-            'mini_whole_rate' => $purchase->mini_whole_rate,
-            'type_a_rate' => $purchase->type_a_rate,
-            'type_b_rate' => $purchase->type_b_rate,
-            'type_c_rate' => $purchase->type_c_rate,
-            'amount' => $purchase->amount,
+            'purchase_rate' => $purchase->purchase_rate,
+            'single_retail_rate' => $purchase->single_retail_rate,
+            'single_purchase_rate' => $purchase->single_purchase_rate,
             'product_names' => $productNamesArray,
         ]);
     }
 
+   
+
+public function updatePurchaseStock(Request $request)
+{
+    $purchaseId = $request->input('purchase_id');
+    $productIds = $request->input('products');
+    $quantities = $request->input('quantity');
+    $purchaseRates = $request->input('purchase_rate');
+    $retailRates = $request->input('retail_rate');
+    $UPRs = $request->input('single_purchase_rate');
+    $URRs = $request->input('single_retail_rate');
     
+    $purchase = Purchase::find($purchaseId);
+    if (!$purchase) {
+        return response()->json(['message' => 'Purchase not found.'], 404);
+    }
+    
+    $purchase->stock_status = 'complete';
+    $purchase->save();
+    
+    foreach ($productIds as $index => $productId) {
+        $product = Product::find($productId);
+        if ($product) {
+            $product->quantity = $quantities[$index];
+            $product->purchase_rate = $purchaseRates[$index];
+            $product->retail_rate = $retailRates[$index];
+            $product->single_purchase_rate = $UPRs[$index];
+            $product->single_retail_rate = $URRs[$index];
+            $product->save();
+        }
+    }
+    
+
+    return response()->json(['message' => 'Purchase and product stock updated successfully.']);
+}
+
 }

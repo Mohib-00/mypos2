@@ -231,4 +231,5 @@ Route::post('/mark-attendance', [AttendanceController::class, 'mark']);
 Route::post('/update-product-inline', [ProductsController::class, 'updateInline'])->name('product.updateInline');
 //to get produts for purchase
 Route::get('/get-product/{id}', [ProductsController::class, 'getProduct'])->name('products.getProduct');
-
+//to grn purchase
+Route::post('/update-purchase-stock', [grnController::class, 'updatePurchaseStock']);
