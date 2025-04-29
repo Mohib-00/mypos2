@@ -295,6 +295,12 @@
     const netAmount = document.getElementById("netAmount").value || 0;
     formData.append("net_amount", netAmount);
 
+    // Add discount if applicable
+    const discount = document.getElementById("discount").value;
+    if (discount && parseFloat(discount) > 0) {
+        formData.append("discount", discount);
+    }
+
     const rows = document.querySelectorAll("#productTable tbody tr");
 
     rows.forEach((row) => {
@@ -322,17 +328,17 @@
     })
     .then(response => response.json())
     .then(data => {
-    Swal.fire({
-        title: 'Success!',
-        text: data.message,
-        icon: 'success',
-        confirmButtonText: 'OK'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            loadpurchasePage(); 
-        }
-    });
-})
+        Swal.fire({
+            title: 'Success!',
+            text: data.message,
+            icon: 'success',
+            confirmButtonText: 'OK'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                loadpurchasePage(); 
+            }
+        });
+    })
     .catch(error => {
         console.error("Error:", error);
         Swal.fire({

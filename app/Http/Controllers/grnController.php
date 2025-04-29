@@ -67,7 +67,8 @@ class grnController extends Controller
         $retailRates = $request->input('retail_rate');
         $UPRs = $request->input('single_purchase_rate');
         $URRs = $request->input('single_retail_rate');
-        $netAmount = $request->input('net_amount', 0); // fetch manually added net amount
+        $netAmount = $request->input('net_amount', 0);
+        $discount = $request->input('discount', 0); 
     
         $purchase = Purchase::find($purchaseId);
         if (!$purchase) {
@@ -89,7 +90,6 @@ class grnController extends Controller
             }
         }
     
-        // Get vendor account by matching sub_head_name with vendors field
         $vendorAccount = AddAccount::where('sub_head_name', $purchase->vendors)->first();
     
         if (!$vendorAccount) {
@@ -101,8 +101,23 @@ class grnController extends Controller
             'vendor_net_amount' => $netAmount,
         ]);
     
+        if ($discount > 0) {
+            $discountAccount = AddAccount::where('sub_head_name', 'Discount Availed')->first();
+    
+            if (!$discountAccount) {
+                return response()->json(['message' => 'Discount Availed account not found.'], 404);
+            }
+    
+            GrnAccount::create([
+                'vendor_account_id' => $discountAccount->id,
+                'discount' => $discount,
+            ]);
+        }
+    
         return response()->json(['message' => 'Purchase, products, and GRN account updated successfully.']);
     }
+    
+
     
 
 }

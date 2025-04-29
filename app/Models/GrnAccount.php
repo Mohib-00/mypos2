@@ -11,6 +11,7 @@ class GrnAccount extends Model
     protected $fillable = [
         'vendor_account_id',
         'vendor_net_amount',
+        'discount',
     ];
 
     public function vendorAccount()
