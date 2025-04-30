@@ -73,7 +73,7 @@
                           <div class="card">
                             <div class="card-body">
                               <div class="d-flex flex-column align-items-center text-center">
-                                <img src="{{ Auth::user()->image ? asset('images/' . Auth::user()->image) : 'https://bootdey.com/img/Content/avatar/avatar7.png' }}" 
+                                <img width=100 height=100 src="{{ Auth::user()->image ? asset('images/' . Auth::user()->image) : 'https://bootdey.com/img/Content/avatar/avatar7.png' }}" 
                                  alt="Admin" class="rounded-circle image" width="150">
 
                                  <div class="mt-3">
