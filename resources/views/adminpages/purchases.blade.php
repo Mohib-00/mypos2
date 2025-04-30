@@ -109,13 +109,11 @@
                                   <i class="icon-plus"></i> Add GRN
                               </a>
 
-                              <a class="btn btn-sm btn-outline-primary me-2" >
+                              <a href="/admin/payment" onclick="loadpayemntPage(); return false;" class="btn btn-sm btn-outline-primary me-2" >
                                 <i class="icon-plus"></i> $Payment
                               </a>
 
-                              <a class="btn btn-sm btn-outline-danger ">
-                                <i class="icon-plus"></i> $Pending Payment
-                              </a>
+                             
                           </div>
                       
                          

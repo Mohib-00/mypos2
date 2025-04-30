@@ -34,6 +34,11 @@ return new class extends Migration
         $table->decimal('gross_amount', 10, 2)->nullable();
         $table->decimal('discount', 10, 2)->nullable();
         $table->decimal('net_amount', 10, 2)->nullable();
+        $table->string('payment_status')->default('pending');
+        $table->string('payment_method')->nullable();
+        $table->string('bank_name')->nullable();
+        $table->decimal('amount_payed', 10, 2)->nullable();
+        $table->decimal('amount_remain', 10, 2)->nullable();
     });
 }
 

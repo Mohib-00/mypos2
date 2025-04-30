@@ -26,6 +26,11 @@ class Purchase extends Model
         'discount',
         'net_amount',
         'created_at',
+        'payment_status',
+        'payment_method',
+        'bank_name',
+        'amount_payed',
+        'amount_remain',
     ];
 
    

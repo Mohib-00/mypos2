@@ -12,6 +12,7 @@ use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\Emplyeescontroller;
 use App\Http\Controllers\grnController;
 use App\Http\Controllers\LeaveController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RegisterController;
@@ -82,6 +83,8 @@ Route::group(['middleware' => ['admin.auth'], 'prefix' => 'admin'], function() {
     Route::get('customers_account/{head_name}', [AccountController::class, 'customersaccount'])->name('customers.child');
     Route::get('/get_account/{id}', [AccountController::class, 'getAccount'])->name('get.account');
     Route::get('vendor_account/{head_name}', [AccountController::class, 'vendoraccountssss'])->name('vendor.child');
+    Route::get("payment", [PaymentController::class, "pay"]);
+
 });
 //to open forgot password page
 Route::get('forgot-password', [ForgotPasswordController::class, 'showForgotPasswordForm'])->name('password.request');
@@ -233,3 +236,6 @@ Route::post('/update-product-inline', [ProductsController::class, 'updateInline'
 Route::get('/get-product/{id}', [ProductsController::class, 'getProduct'])->name('products.getProduct');
 //to grn purchase
 Route::post('/update-purchase-stock', [grnController::class, 'updatePurchaseStock']);
+//to submit payment
+Route::post('/submit-payment', [PaymentController::class, 'storePayment'])->name('submit.payment');
+

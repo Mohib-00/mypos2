@@ -69,7 +69,7 @@
           @endif
 
           @if(Auth::check() && Auth::user()->userType == 1)
-          <li class="nav-item">
+          <li class="nav-item"> 
             <a data-bs-toggle="collapse" href="#tables">
               <i class="icon-people"></i>
               <p>Customers</p>
