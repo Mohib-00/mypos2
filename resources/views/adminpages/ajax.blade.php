@@ -651,6 +651,10 @@ $(document).on('click', '#submitpassword', function(e) {
        loadPage('/admin/payment', '/admin/payment');
    }
 
+   function loadposPage() {
+       loadPage('/admin/POS', '/admin/POS');
+   }
+
    function loadassetchildPage(headName) {
     loadPage('/admin/assets_child/' + headName, '/admin/assets_child/' + headName);
 }

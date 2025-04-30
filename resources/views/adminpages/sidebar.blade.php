@@ -59,6 +59,13 @@
           </li>
           @endif
 
+          <li class="nav-item">
+            <a href="/admin/POS" onclick="loadposPage(); return false;">
+              <i style="color:blue" class="fas fa-dolly-flatbed"></i>
+              <p>POS</p>
+            </a>
+          </li>
+
           @if(Auth::check() && Auth::user()->userType == 1)
           <li class="nav-item">
             <a href="/admin/add_vendor" onclick="loadVendorsPage(); return false;">

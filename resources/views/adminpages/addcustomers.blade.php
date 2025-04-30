@@ -90,11 +90,7 @@
                                   <option>Select Type</option>
                                  
                                   <option>retail_rate</option>
-                                  <option>mini_whole_rate</option>
-                                  <option>wholesale_rate</option>
-                                  <option>type_a_rate</option>
-                                  <option>type_b_rate</option>
-                                  <option>type_c_rate</option>
+                              
                                 </select>
                                   <span id="nameError" class="text-danger"></span>
                                 </div>

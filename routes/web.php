@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\Emplyeescontroller;
@@ -16,6 +17,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\saleController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\UserAuthcontroller;
@@ -84,7 +86,7 @@ Route::group(['middleware' => ['admin.auth'], 'prefix' => 'admin'], function() {
     Route::get('/get_account/{id}', [AccountController::class, 'getAccount'])->name('get.account');
     Route::get('vendor_account/{head_name}', [AccountController::class, 'vendoraccountssss'])->name('vendor.child');
     Route::get("payment", [PaymentController::class, "pay"]);
-
+    Route::get("POS", [saleController::class, "pos"]);
 });
 //to open forgot password page
 Route::get('forgot-password', [ForgotPasswordController::class, 'showForgotPasswordForm'])->name('password.request');
