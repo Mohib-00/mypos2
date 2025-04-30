@@ -117,6 +117,9 @@
                               <button class="btn btn-sm btn-outline-danger export-pdf">
                                   <i class="fas fa-file-pdf"></i> PDF
                               </button>
+                              <button class="btn btn-sm btn-outline-primary export-excel">
+                                <i class="fas fa-file-pdf"></i> Excel
+                            </button>
                           </div>
                       
                          

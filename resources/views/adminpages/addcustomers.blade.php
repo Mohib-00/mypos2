@@ -83,7 +83,6 @@
                             <div class="col-md-6 col-lg-4">
                                 <div class="form-group">
                                   <label for="client_type">Client Type</label>
-                                  {{--<input class="form-control" type="text" id="client_type" name="client_type" placeholder="Client Type">--}}
                                   <select
                                   class="form-select form-control"
                                   id="client_type" name="client_type"

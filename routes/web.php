@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 //User Page    
 Route::get('/', [UserAuthController::class, 'home']);
 //to open register page
-Route::get("register", [RegisterController::class, "register"]);
+//Route::get("register", [RegisterController::class, "register"]);
 //to open login page
 Route::get("login", [RegisterController::class, "login"]);
 //register

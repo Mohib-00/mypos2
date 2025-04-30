@@ -51,7 +51,7 @@ class PurchaseController extends Controller
     public function purchaseinvoice($id)
     {
         $user = Auth::user();
-        $products = Product::select('id', 'brand_name', 'item_name', 'barcode')->get(); // Only needed fields
+        $products = Product::select('id', 'brand_name', 'item_name', 'barcode')->get(); 
         $vendors = Vendors::all();
     
         $purchase = Purchase::findOrFail($id);

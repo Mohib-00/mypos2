@@ -28,7 +28,6 @@ class PaymentController extends Controller
             'amount_remain' => 'required|numeric',
         ]);
     
-        // Fetch the purchase
         $purchase = Purchase::where('invoice_no', $request->invoice_no)->first();
     
         if (!$purchase) {
@@ -42,15 +41,12 @@ class PaymentController extends Controller
             'amount_remain' => $request->amount_remain,
         ];
     
-        // If amount_remain is 0, mark as complete
         if ($request->amount_remain == 0) {
             $updateData['payment_status'] = 'complete';
         }
     
-        // Update the purchase record
         $purchase->update($updateData);
     
-        // Get vendor account ID using vendor_name
         $vendorAccount = DB::table('add_accounts')
             ->where('sub_head_name', $purchase->vendors)
             ->first();
@@ -59,7 +55,6 @@ class PaymentController extends Controller
             return response()->json(['error' => 'Vendor account not found.']);
         }
     
-        // Insert debit record for vendor
         DB::table('grn_accounts')->insert([
             'vendor_account_id' => $vendorAccount->id,
             'debit' => $request->amount_payed,
@@ -67,7 +62,6 @@ class PaymentController extends Controller
             'updated_at' => now(),
         ]);
     
-        // Handle the "cash" payment method
         if (strtolower($request->payment_method) === 'cash') {
             $cashAccount = DB::table('add_accounts')
                 ->where('sub_head_name', 'Cash In Hand')
@@ -85,7 +79,6 @@ class PaymentController extends Controller
             }
         }
     
-        // Handle the "bank" payment method
         if (strtolower($request->payment_method) === 'bank') {
             $bankAccount = DB::table('add_accounts')
                 ->where('sub_head_name', 'Cash At Bank')
