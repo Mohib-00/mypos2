@@ -51,22 +51,23 @@ class PurchaseController extends Controller
     public function purchaseinvoice($id)
     {
         $user = Auth::user();
-        $products = Product::all();
+        $products = Product::select('id', 'brand_name', 'item_name', 'barcode')->get(); // Only needed fields
         $vendors = Vendors::all();
-        
-        $purchase = Purchase::findOrFail($id);
     
-        $selectedProductIds = json_decode($purchase->products ?? '[]');
+        $purchase = Purchase::findOrFail($id);
     
         return view('adminpages.purchaseinvoice', [
             'userName' => $user->name,
             'userEmail' => $user->email,
             'products' => $products,
             'vendors' => $vendors,
-            'selectedProductIds' => $selectedProductIds,
+            'selectedProductIds' => json_decode($purchase->products ?? '[]'),
+            'quantities' => json_decode($purchase->quantity ?? '[]'),
+            'retailRates' => json_decode($purchase->retail_rate ?? '[]'),
             'purchase' => $purchase
         ]);
     }
+    
     
 
     public function store(Request $request)

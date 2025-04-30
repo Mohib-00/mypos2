@@ -130,42 +130,37 @@
                         </thead>
                         <tbody>
                             @foreach($selectedProductIds as $index => $productId)
-                            @php
-                            $product = $products->firstWhere('id', $productId);
-                            $quantity = isset($quantities[$index]) ? $quantities[$index] : 1; 
-                            $amount = isset($amounts[$index]) ? $amounts[$index] : ($product->price * $quantity); 
-                            $price = isset($prices[$index]) ? $prices[$index] : $product->price;
-                            $retailRate = isset($retailRates[$index]) ? $retailRates[$index] : $product->retail_rate;
-                          @endphp
-                          
-                        <tr>
-                            <td>{{ $index + 1 }}</td>
-                            <td>{{ $product->brand_name ?? 'N/A' }}</td>
-                            <td>{{ $product->item_name ?? 'Unknown Product' }}</td>
-                            <td>{{$product->id}}</td>
-                            <td>{{ $product->barcode ?? 'N/A' }}</td>
-                            <td>{{ $product->quantity }}</td>
-                            <td>{{ $product->retail_rate }}</td>
-                        </tr>
-                        @endforeach
-
+                                @php
+                                    $product = $products->firstWhere('id', $productId);
+                                @endphp
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $product->brand_name ?? 'N/A' }}</td>
+                                    <td>{{ $product->item_name ?? 'Unknown Product' }}</td>
+                                    <td>{{ $product->id ?? 'Unknown id' }}</td>
+                                    <td>{{ $product->barcode ?? 'N/A' }}</td>
+                                    <td>{{ $quantities[$index] ?? 'N/A' }}</td>
+                                    <td>{{ $retailRates[$index] ?? 'N/A' }}</td>
+                                </tr>
+                            @endforeach
+                        
                             <tr>
                                 <td colspan="5"></td>
                                 <td class="table-info"><strong>Gross Amount</strong></td>
-                                <td class="table-info"><strong>{{$purchase->gross_amount}}</strong></td>
+                                <td class="table-info"><strong>{{ $purchase->gross_amount }}</strong></td>
                             </tr>
                             <tr>
                                 <td colspan="5"></td>
                                 <td class="table-danger"><strong>Discount</strong></td>
-                                <td class="table-danger"><strong>{{$purchase->discount}}</strong></td>
+                                <td class="table-danger"><strong>{{ $purchase->discount }}</strong></td>
                             </tr>
                             <tr>
                                 <td colspan="5"></td>
                                 <td class="table-success"><strong>Net Amount</strong></td>
-                                <td class="table-success"><strong>{{$purchase->net_amount}}</strong></td>
+                                <td class="table-success"><strong>{{ $purchase->net_amount }}</strong></td>
                             </tr>
-                           
                         </tbody>
+                        
                     </table>
                 </div>
 

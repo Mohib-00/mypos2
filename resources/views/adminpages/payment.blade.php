@@ -218,7 +218,7 @@
                         </div>
                       </div>
 
-                      <div class="col-md-6 col-lg-4">
+                      <div class="col-md-6 col-lg-4" style="display: none">
                         <div class="form-group">
                           <label for="amount_remain">Amount Rmaining</label>
                           <input type="number" name="amount_remain" class="form-control" id="amount_remain">
