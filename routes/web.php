@@ -240,4 +240,9 @@ Route::get('/get-product/{id}', [ProductsController::class, 'getProduct'])->name
 Route::post('/update-purchase-stock', [grnController::class, 'updatePurchaseStock']);
 //to submit payment
 Route::post('/submit-payment', [PaymentController::class, 'storePayment'])->name('submit.payment');
-
+//to get products for sale
+Route::get('/get-product-details/{id}', [SaleController::class, 'getProductDetails']);
+//to get customer related to user
+Route::get('/get-customers-by-username/{username}', [SaleController::class, 'getCustomersByUsername']);
+//to get customer discount
+Route::get('/get-customer-discount/{customerId}', [SaleController::class, 'getCustomerDiscount']);
