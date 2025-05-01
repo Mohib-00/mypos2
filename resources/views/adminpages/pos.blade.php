@@ -56,7 +56,7 @@
         <div class="container">
             <div class="page-inner">
              
-              <form id="saleformmssubmit">
+              <form id="saleForm">
                 <div class="row">
                     <div class="col-md-12">
                       <div class="card card-round">
@@ -65,7 +65,7 @@
                             <!-- Clients Form -->
                             <div class="col-12 col-md-2 mb-3">
                               <label for="customerSelect">Choose Employee</label>
-                              <select class="form-select form-select-sm" id="customerSelect">
+                              <select class="form-select form-select-sm" id="customerSelect" name="employee">
                                 <option value="1">All</option>
                                 @foreach ($users as $user)
                                   <option value="{{ $user->name }}">{{ $user->name }}</option>
@@ -76,7 +76,7 @@
                             <!-- Choose a Customer -->
                             <div class="col-12 col-md-6 mb-3">
                               <label for="smallSelect">Choose a Customer</label>
-                              <select class="form-select form-select-sm" id="smallSelect">
+                              <select class="form-select form-select-sm" id="smallSelect" name="customer_name">
                                 <option value="1">All</option>
                                 @foreach ($customers as $customer)
                                   <option value="{{ $customer->id }}">{{ $customer->customer_name }}</option>
@@ -141,13 +141,13 @@
                                 <tr>
                                   <td colspan="3" class="text-end fw-bold">Total Items</td>
                                   <td class=" fw-bold" >
-                                    <input type="number" id="totalItems"  name="totalItems" class="form-control form-control-sm text-end fw-bold" style="width: fit-content" disabled>
+                                    <input type="number" id="totalItems"  name="total_items" class="form-control form-control-sm text-end fw-bold" style="width: fit-content" disabled>
                                   </td>
                                 </tr>
                                 <tr>
                                   <td colspan="3" class="text-end fw-bold">Total</td>
                                   <td class=" fw-bold" >
-                                    <input type="number" id="totalAmount" name="totalAmount" class="form-control form-control-sm text-end fw-bold" style="width: fit-content;" disabled>
+                                    <input type="number" id="totalAmount" name="total" class="form-control form-control-sm text-end fw-bold" style="width: fit-content;" disabled>
 
                                   </td>
                                 </tr>
@@ -168,7 +168,7 @@
                           <div class="card-head-row card-tools-still-right mb-3">
                             <div class="fw-bold" style="font-size: 16px;">Sale Type</div>
                             <div class="dropdown ms-auto">
-                              <select class="form-select form-select-sm" id="saleTypeSelect" style="width: 150px; border-radius: 8px;">
+                              <select class="form-select form-select-sm" name="sale_type" id="saleTypeSelect" style="width: 150px; border-radius: 8px;">
                                 <option value="1">Cash</option>
                                 <option value="2">Credit</option>
                               </select>
@@ -179,7 +179,7 @@
                           <div class="card-head-row card-tools-still-right mb-3">
                             <div class="fw-bold" style="font-size: 16px;">Payment Type</div>
                             <div class="dropdown ms-auto">
-                              <select class="form-select form-select-sm" id="paymentTypeSelect" style="width: 150px; border-radius: 8px;">
+                              <select class="form-select form-select-sm" name="payment_type" id="paymentTypeSelect" style="width: 150px; border-radius: 8px;">
                                 <option value="1">Cash</option>
                                 <option value="2">Bank</option>
                               </select>
@@ -238,7 +238,7 @@
                               <div class="info-user">
                                 <div class="fw-bold" style="font-size: 16px;">Total Rs:</div>
                               </div>
-                              <input class="form-control form-control-sm ms-auto" value="0" type="number" name="total" id="total" style="width: 150px; border-radius: 8px;" disabled/>
+                              <input class="form-control form-control-sm ms-auto" value="0" type="number" name="subtotal" id="total" style="width: 150px; border-radius: 8px;" disabled/>
                             </div>
                           </div>
                   
@@ -333,31 +333,30 @@ $('#smallSelect').on('change', function () {
 function updateTotals() {
       let totalItems = 0;
       let totalAmount = 0;
-  
+
       $('#productTable tbody tr').each(function () {
         const quantity = parseInt($(this).find('.quantity-input').val()) || 0;
-        const subtotalText = $(this).find('td').eq(3).text().replace('Rs:', '');
-        const subtotal = parseFloat(subtotalText) || 0;
-  
+        const subtotal = parseFloat($(this).find('.subtotal-input').val()) || 0;
+
         totalItems += quantity;
         totalAmount += subtotal;
       });
-  
+
       $('#totalItems').val(totalItems);
-  
       $('#totalAmount').val(totalAmount.toFixed(2));
-  
+
       const discountPercentage = parseFloat($('#discount').val()) || 0;
       const fixedDiscount = parseFloat($('#fixeddiscount').val()) || 0;
-  
-      const amountAfterDiscount = totalAmount - discountPercentage ;
+
+      const amountAfterDiscount = totalAmount - discountPercentage;
       $('#amountafterdiscount').val(amountAfterDiscount.toFixed(2));
-  
+
       const amountAfterFixDiscount = amountAfterDiscount - fixedDiscount;
       $('#amountafterfixdiscount').val(amountAfterFixDiscount.toFixed(2));
 
       $('#total').val(amountAfterFixDiscount.toFixed(2));
     }
+
 
     </script>
     
@@ -377,7 +376,7 @@ function updateTotals() {
     $('#productSelect').on('change', function () {
       var productId = $(this).val();
       if (!productId) return;
-  
+
       $.ajax({
         url: '/get-product-details/' + productId,
         type: 'GET',
@@ -389,35 +388,42 @@ function updateTotals() {
               text: `The item "${product.item_name}" is currently out of stock.`,
               confirmButtonText: 'OK'
             });
-            return; 
+            return;
           }
-  
+
           var quantity = 1;
           var retailRate = parseFloat(product.retail_rate);
           var subtotal = quantity * retailRate;
-  
+
           var existingRow = $('#productTable tbody tr').filter(function () {
-            return $(this).find('td').first().text() === product.item_name;
+            return $(this).find('.item-name-input').val() === product.item_name;
           });
-  
+
           if (existingRow.length > 0) {
             var currentQuantity = parseInt(existingRow.find('.quantity-input').val());
             var newQuantity = currentQuantity + 1;
             existingRow.find('.quantity-input').val(newQuantity);
-  
-            var newSubtotal = newQuantity * retailRate;
-            existingRow.find('td').eq(3).text('Rs:' + newSubtotal.toFixed(2));
-  
+
+            var rate = parseFloat(existingRow.find('.rate-input').val());
+            var newSubtotal = newQuantity * rate;
+            existingRow.find('.subtotal-input').val(newSubtotal.toFixed(2));
+
             updateTotals();
           } else {
             $('#productTable tbody').append(`
               <tr>
-                <td>${product.item_name}</td>
-                <td class="text-end">
-                  <input type="number" class="form-control form-control-sm quantity-input" value="${quantity}" min="1" style="text-align:right;width:40px">
+                <td>
+                  <input type="text" name="product_name[]" class="form-control form-control-sm item-name-input" value="${product.item_name}" readonly style="width:150px">
                 </td>
-                <td>Rs:${retailRate.toFixed(2)}</td>
-                <td>Rs:${subtotal.toFixed(2)}</td>
+                <td class="text-end">
+                  <input type="number" name="product_quantity[]" class="form-control form-control-sm quantity-input" value="${quantity}" min="1" style="text-align:right;width:60px">
+                </td>
+                <td>
+                  <input type="number" name="product_rate[]" class="form-control form-control-sm rate-input" value="${retailRate.toFixed(2)}" min="0" step="0.01" style="text-align:right;width:80px">
+                </td>
+                <td>
+                  <input type="text" name="product_subtotal[]" class="form-control form-control-sm subtotal-input" value="${subtotal.toFixed(2)}" readonly style="text-align:right;width:100px">
+                </td>
                 <td>
                   <button class="btn btn-icon btn-round btn-danger btn-sm delete-row">
                     <i class="fa fa-trash"></i>
@@ -425,7 +431,7 @@ function updateTotals() {
                 </td>
               </tr>
             `);
-  
+
             updateTotals();
           }
         },
@@ -434,54 +440,118 @@ function updateTotals() {
         }
       });
     });
-  
+
+    
+document.getElementById('saleForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  let productNames = document.querySelectorAll('[name="product_name[]"]');
+  let productQuantities = document.querySelectorAll('[name="product_quantity[]"]');
+  let productRates = document.querySelectorAll('[name="product_rate[]"]');
+  let productSubtotals = document.querySelectorAll('[name="product_subtotal[]"]');
+
+  let items = [];
+
+  for (let i = 0; i < productNames.length; i++) {
+    let name = productNames[i].value.trim();
+    if (name !== '') {
+      items.push({
+        product_name: name,
+        product_quantity: parseInt(productQuantities[i].value),
+        product_rate: parseFloat(productRates[i].value),
+        product_subtotal: parseFloat(productSubtotals[i].value),
+      });
+    }
+  }
+
+  let customerSelect = document.getElementById('customerSelect');
+let customerName = customerSelect.options[customerSelect.selectedIndex].text;
+
+let formData = {
+  employee: document.querySelector('[name="employee"]').value,
+  customer_name: customerName, 
+  created_at: document.querySelector('[name="created_at"]').value,
+  ref: document.querySelector('[name="ref"]').value,
+  sale_type: document.querySelector('[name="sale_type"]').value,
+  payment_type: document.querySelector('[name="payment_type"]').value,
+  discount: document.querySelector('[name="discount"]').value,
+  total_items: document.querySelector('[name="total_items"]').value,
+  total: document.querySelector('[name="total"]').value,
+  amount_after_discount: document.querySelector('[name="amount_after_discount"]').value,
+  fixed_discount: document.querySelector('[name="fixed_discount"]').value,
+  amount_after_fix_discount: document.querySelector('[name="amount_after_fix_discount"]').value,
+  subtotal: document.querySelector('[name="subtotal"]').value,
+  items: items
+};
+
+  fetch('/sales', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
+    },
+    body: JSON.stringify(formData)
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success:', data);
+    alert("Sale submitted successfully!");
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+    alert("Error submitting sale.");
+  });
+});
+
+
+
     $(document).on('click', '.delete-row', function () {
       $(this).closest('tr').remove();
       updateTotals();
     });
-  
-    $(document).on('input', '.quantity-input', function () {
+
+    $(document).on('input', '.quantity-input, .rate-input', function () {
       const $row = $(this).closest('tr');
-      let quantity = parseInt($(this).val());
-  
-      if (quantity < 1 || isNaN(quantity)) {
+      let quantity = parseInt($row.find('.quantity-input').val());
+      let rate = parseFloat($row.find('.rate-input').val());
+
+      if (isNaN(quantity) || quantity < 1) {
         quantity = 1;
-        $(this).val(quantity);  
+        $row.find('.quantity-input').val(quantity);
       }
-  
-      const rateText = $row.find('td').eq(2).text().replace('Rs:', '');
-      const rate = parseFloat(rateText);
-  
+
+      if (isNaN(rate) || rate < 0) {
+        rate = 0;
+        $row.find('.rate-input').val(rate.toFixed(2));
+      }
+
       const newSubtotal = quantity * rate;
-  
-      $row.find('td').eq(3).text('Rs:' + newSubtotal.toFixed(2));
-  
+      $row.find('.subtotal-input').val(newSubtotal.toFixed(2));
+
       updateTotals();
     });
-  
+
     function updateTotals() {
       let totalItems = 0;
       let totalAmount = 0;
-  
+
       $('#productTable tbody tr').each(function () {
         const quantity = parseInt($(this).find('.quantity-input').val()) || 0;
-        const subtotalText = $(this).find('td').eq(3).text().replace('Rs:', '');
-        const subtotal = parseFloat(subtotalText) || 0;
-  
+        const subtotal = parseFloat($(this).find('.subtotal-input').val()) || 0;
+
         totalItems += quantity;
         totalAmount += subtotal;
       });
-  
+
       $('#totalItems').val(totalItems);
-  
       $('#totalAmount').val(totalAmount.toFixed(2));
-  
+
       const discountPercentage = parseFloat($('#discount').val()) || 0;
       const fixedDiscount = parseFloat($('#fixeddiscount').val()) || 0;
-  
-      const amountAfterDiscount = totalAmount - discountPercentage ;
+
+      const amountAfterDiscount = totalAmount - discountPercentage;
       $('#amountafterdiscount').val(amountAfterDiscount.toFixed(2));
-  
+
       const amountAfterFixDiscount = amountAfterDiscount - fixedDiscount;
       $('#amountafterfixdiscount').val(amountAfterFixDiscount.toFixed(2));
 
@@ -489,14 +559,15 @@ function updateTotals() {
     }
 
     $('#discount').on('input', function () {
-    updateTotals();
-     });
-
-     $('#fixeddiscount').on('input', function () {
       updateTotals();
-      });
     });
+
+    $('#fixeddiscount').on('input', function () {
+      updateTotals();
+    });
+  });
 </script>
+
 
   </body>
 </html>

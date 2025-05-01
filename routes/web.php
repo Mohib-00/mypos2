@@ -246,3 +246,5 @@ Route::get('/get-product-details/{id}', [SaleController::class, 'getProductDetai
 Route::get('/get-customers-by-username/{username}', [SaleController::class, 'getCustomersByUsername']);
 //to get customer discount
 Route::get('/get-customer-discount/{customerId}', [SaleController::class, 'getCustomerDiscount']);
+//to save sale
+Route::post('/sales', [SaleController::class, 'store'])->name('sales.store');
