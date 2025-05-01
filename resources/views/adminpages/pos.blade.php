@@ -56,6 +56,7 @@
         <div class="container">
             <div class="page-inner">
              
+              <form id="saleformmssubmit">
                 <div class="row">
                     <div class="col-md-12">
                       <div class="card card-round">
@@ -140,13 +141,13 @@
                                 <tr>
                                   <td colspan="3" class="text-end fw-bold">Total Items</td>
                                   <td class=" fw-bold" >
-                                    <input type="number" id="totalItems"  name="totalItems" class="form-control form-control-sm text-end fw-bold" style="width: fit-content">
+                                    <input type="number" id="totalItems"  name="totalItems" class="form-control form-control-sm text-end fw-bold" style="width: fit-content" disabled>
                                   </td>
                                 </tr>
                                 <tr>
                                   <td colspan="3" class="text-end fw-bold">Total</td>
                                   <td class=" fw-bold" >
-                                    <input type="number" id="totalAmount" name="totalAmount" class="form-control form-control-sm text-end fw-bold" style="width: fit-content;">
+                                    <input type="number" id="totalAmount" name="totalAmount" class="form-control form-control-sm text-end fw-bold" style="width: fit-content;" disabled>
 
                                   </td>
                                 </tr>
@@ -203,7 +204,7 @@
                               <div class="info-user">
                                 <div class="fw-bold" style="font-size: 16px;">Amount After Discount</div>
                               </div>
-                              <input class="form-control form-control-sm ms-auto" type="number" name="amount_after_discount" id="amountafterdiscount" value="0" style="width: 120px; border-radius: 8px;" />
+                              <input class="form-control form-control-sm ms-auto" type="number" name="amount_after_discount" id="amountafterdiscount" value="0" style="width: 120px; border-radius: 8px;"disabled />
                             </div>
                           </div>
                   
@@ -215,7 +216,7 @@
                               <div class="info-user">
                                 <div class="fw-bold" style="font-size: 16px;">Fixed Discount</div>
                               </div>
-                              <input class="form-control form-control-sm ms-auto" type="number" name="fixed_discount" id="fixeddiscount" style="width: 150px; border-radius: 8px;" value="0" />
+                              <input class="form-control form-control-sm ms-auto" type="number" name="fixed_discount" id="fixeddiscount" style="width: 150px; border-radius: 8px;" value="0" disabled/>
                             </div>
                           </div>
                   
@@ -225,7 +226,7 @@
                               <div class="info-user">
                                 <div class="fw-bold" style="font-size: 16px;">Amount After Fix-Discount</div>
                               </div>
-                              <input class="form-control form-control-sm ms-auto" type="number" name="amount_after_fix_discount" id="amountafterfixdiscount" style="width: 120px; border-radius: 8px;" value="0" />
+                              <input class="form-control form-control-sm ms-auto" type="number" name="amount_after_fix_discount" id="amountafterfixdiscount" style="width: 120px; border-radius: 8px;" value="0" disabled/>
                             </div>
                           </div>
                   
@@ -237,7 +238,7 @@
                               <div class="info-user">
                                 <div class="fw-bold" style="font-size: 16px;">Total Rs:</div>
                               </div>
-                              <input class="form-control form-control-sm ms-auto" type="number" name="total" id="total" style="width: 150px; border-radius: 8px;" />
+                              <input class="form-control form-control-sm ms-auto" value="0" type="number" name="total" id="total" style="width: 150px; border-radius: 8px;" disabled/>
                             </div>
                           </div>
                   
@@ -253,6 +254,7 @@
                     </div>
                   
                   </div>
+              </form>
                   
               </div>
         </div>
